@@ -4,9 +4,12 @@ import os
 import numpy as np
 import time
 
-import chfs
-
-logger = chfs.logger("DEBUG")
+@pytest.fixture(autouse=True)
+def init():
+    server = os.getenv("CHFS_SERVER")
+    if not server:
+        raise ValueError("CHFS server may not be up. Set CHFS_SERVER")
+    yield
 
 def test_fsspec_local():
     fsspec.filesystem("file")

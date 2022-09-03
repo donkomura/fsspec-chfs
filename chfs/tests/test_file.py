@@ -5,6 +5,13 @@ import pytest
 import os
 
 
+@pytest.fixture(autouse=True)
+def init():
+    server = os.getenv("CHFS_SERVER")
+    if not server:
+        raise ValueError("CHFS server may not be up. Set CHFS_SERVER")
+    yield
+
 def test_file_rw():
     fs = fsspec.filesystem("chfs")
     with fs.open("zzz") as f:

@@ -1,7 +1,16 @@
+import os
 import cloudpickle
 import fsspec
 import numpy as np
+import pytest
 
+
+@pytest.fixture(autouse=True)
+def init():
+    server = os.getenv("CHFS_SERVER")
+    if not server:
+        raise ValueError("CHFS server may not be up. Set CHFS_SERVER")
+    yield
 
 def test_pickle_chfs():
     fs = fsspec.filesystem("chfs", foo="bar")
