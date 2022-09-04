@@ -9,3 +9,4 @@ chfsenv
 build
 .env
 venv
+dist
